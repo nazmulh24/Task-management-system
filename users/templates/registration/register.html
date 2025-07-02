@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users | Sign-Up</title>
+    {% comment %} <link rel="stylesheet" href="{% static 'css/output.css' %}"> {% endcomment %}
+</head>
+<body>
+
+    <div class="w-2/3 mx-auto mt-10">
+        {% comment %} <input type="text" class="border-2"> {% endcomment %}
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+
+            <button type="submit" class="bg-blue-400 p-2">Sign Up</button>
+        </form>
+
+    </div>
+    
+</body>
+</html>
