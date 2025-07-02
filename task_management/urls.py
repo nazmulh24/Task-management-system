@@ -18,11 +18,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from debug_toolbar.toolbar import debug_toolbar_urls
-
-# from tasks.views import home  # ---> Import ..home.. view from tasks app
+from core.views import homee
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("tasks/", include("tasks.urls")),  # ---> Include __ tasks app __ urls
     path("users/", include("users.urls")),  # ---> Include __ users app __ urls
+    path("", homee, name="Home"),
 ] + debug_toolbar_urls()

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "tasks",  # -----> Custom app for task management
     "users",  # -----> Custom app for user management
     "debug_toolbar",  # -----> Debug Toolbar App
+    "core",
 ]
 
 MIDDLEWARE = [
