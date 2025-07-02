@@ -3,13 +3,22 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from users.forms import RegisterForm, CustomRegisterForm
+from django.contrib import messages
 
 
 def sign_up(request):
     if request.method == "POST":
         form = CustomRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data.get("pass1"))
+            user.is_active = False
+            user.save()
+            messages.success(
+                request,
+                "Registration successful! Please check your email to activate your account.",
+            )
+            return redirect("sign-in")
 
     else:
         form = CustomRegisterForm()
