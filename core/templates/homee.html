@@ -11,9 +11,15 @@
 
     {% if user.is_authenticated %}
         {{user}}
+        <form action="{% url 'log-out' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">LogOut</button>
+        </form>
     {% else %}
         Anonymous
     {% endif %}
+
+
 
 
 </body>
