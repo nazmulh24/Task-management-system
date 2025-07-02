@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.signals import post_save, pre_save, m2m_changed
+from django.db.models.signals import post_save, pre_save, m2m_changed, post_delete
 from django.dispatch import receiver
 from django.core.mail import send_mail
 
@@ -39,7 +39,7 @@ class TaskDetail(models.Model):
     )
     task = models.OneToOneField(
         Task,
-        on_delete=models.CASCADE,
+        on_delete=models.DO_NOTHING,
         related_name="details",
     )
     # assigned_to = models.CharField(max_length=100)
@@ -69,28 +69,6 @@ class Employee(models.Model):
 
 # -----------------------------> Signals --------- Below
 
-# --> post_save
-# @receiver(post_save, sender=Task)
-# def notify_task_creation(sender, instance, created, **kwargs):
-#     print("sender", sender)
-#     print("instance", instance)
-#     print("kwargs", kwargs)
-#     print("created", created)
-
-#     if created:
-#         instance.is_completed = True
-#         instance.save()
-
-
-# --> pre_save
-# @receiver(pre_save, sender=Task)
-# def notify_task_creation(sender, instance, **kwargs):
-#     print("sender", sender)
-#     print("instance", instance)
-#     print("kwargs", kwargs)
-
-#     instance.is_completed = True
-
 
 # -----> Sending Email
 @receiver(m2m_changed, sender=Task.assigned_to.through)
@@ -105,3 +83,11 @@ def notify_employees_on_task_creation(sender, instance, action, **kwargs):
             assigned_emails,
             fail_silently=False,
         )
+
+
+# --> post_delete
+@receiver(post_delete, sender=Task)
+def delete_associated_detail(sender, instance, **kwargs):
+    if instance.details:
+        instance.details.delete()
+        print(f"Details for task '{instance.title}' have been deleted.")
