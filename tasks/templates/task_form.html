@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task_form</title>
+
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+<body>
+    <div class = "w-1/2 mx-auto mt-8">
+        <div>
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="px-2 py-1 {% if msg.tags == 'success' %}bg-green-500{% endif %}">{{msg}}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    
+        <form method="POST"> 
+            {% comment %} <input type="text" class="border rounded-2 p-2 w-full"> {% endcomment %}
+
+            {% csrf_token %}
+            {{ task_form }}
+            {{ task_detail_form}}
+            <button type="submit" class="mb-4 text-white bg-red-500 mt-3 p-2 rounded-lg">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+{% extends "dashboard/dashboard.html" %}
+
+
+{% block title %}
+    Manager Dashboard
+{% endblock title %}
+
+{% block tasks %}
+
+<div>
+  {% if messages %}
+      {% for msg in messages %}
+          <div class="px-2 py-1 {% if msg.tags == 'success' %}bg-green-500{% endif %}">{{msg}}</div>
+      {% endfor %}
+  {% endif %}
+</div>
+
+<!-- Task Table -->
+<div class="bg-white rounded-xl shadow-sm">
+    <div class="grid grid-cols-12 p-5 text-sm text-gray-500 border-b border-gray-100">
+      <div class="col-span-3">TASK TITLE</div>
+      <div class="col-span-1">PRIORITY</div>
+      <div class="col-span-2">STATUS</div>
+      <div class="col-span-2">TEAM</div>
+      <div class="col-span-2">CREATED AT</div>
+      <div class="col-span-2 gap-5">
+        MOD -->
+        <a href="{% url "create-task" %}" class="p-2 px-5 ml-3 border border-black rounded-lg text-white bg-green-400">Add</a>
+      </div>
+    </div>
+
+    <!-- Task Items -->
+    <div class="divide-y divide-gray-100 mb-10">
+      {% for task in tasks %}
+        <!-- Task Item 1 -->
+        <div class="grid grid-cols-12 p-5 gap-4 items-center">
+        <!-- Title -->
+        <div class="col-span-3 flex items-center gap-2 ps-1">
+          {% if task.status == 'PENDING' %}
+            <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+          {% elif task.status == 'COMPLETED' %}
+            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+          {% elif task.status == 'IN_PROGRESS' %}
+            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+          {% endif %}
+          <div><span>{{task.title}}</span></div>
+        </div>
+        <!-- Priority -->
+        <div class="col-span-1">
+          <span class="px-3 py-1 rounded-full text-sm
+            {% if task.details.priority == 'H' %}
+              bg-blue-200 text-blue-600
+            {% elif task.details.priority == 'M' %}
+              bg-gray-200 text-gray-500
+            {% elif task.details.priority == 'L' %}
+              bg-red-200 text-red-500
+            {% endif %}">
+            {{ task.details.get_priority_display }}
+          </span>
+        </div>
+        <!-- Status -->
+        <div class="col-span-2">
+            {% if task.status == 'PENDING' %}
+              <span class="border border-red-100 rounded-lg p-2 mx-1 bg-yellow-500 text-white">Pending</span>
+            {% elif task.status == 'COMPLETED' %}
+              <span class="border border-red-100 rounded-lg p-2 mx-1 bg-green-500 text-white">Completed</span>
+            {% elif task.status == 'IN_PROGRESS' %}
+              <span class="border border-red-100 rounded-lg p-2 mx-1 bg-blue-500 text-white">In Progress</span>
+            {% endif %}
+        </div>
+        <!-- Team -->
+        <div class="col-span-2">
+          <div class="flex -space-x-2">
+            {% for emp in task.assigned_to.all %}
+              <div
+              class="w-8 h-8 rounded-full {% cycle 'bg-red-500' 'bg-green-500' 'bg-blue-500' 'bg-yellow-500' 'bg-purple-500' 'bg-pink-500'%} text-white flex justify-center items-center text-sm border-2 border-white">
+                {{emp.name|slice:":2"|upper}}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <!-- Created_date -->
+        <div class="col-span-2">
+          <span class="text-gray-500">{{task.created_at|timesince}}</span>
+        </div>
+        <!-- Modification -->
+        <div class= "flex gap-2 col-span-2">
+          <a href="{% url "update-task" task.id %}" class="p-2  border border-black rounded-lg bg-yellow-400">Edit</a>
+          <form action="{% url "delete-task" task.id %}" method="POST">
+          {% csrf_token %}
+            <button type="submit" class="p-2 border border-black rounded-lg bg-red-400">Delete</button>
+          </form>
+        </div>
+        </div>
+      {% endfor %}
+    </div>
+</div>
+
+{% endblock tasks %}
