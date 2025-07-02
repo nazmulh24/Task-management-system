@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
 
 
 class Task(models.Model):
@@ -62,3 +64,28 @@ class Employee(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# -----------------------------> Signals --------- Below
+
+# --> post_save
+# @receiver(post_save, sender=Task)
+# def notify_task_creation(sender, instance, created, **kwargs):
+#     print("sender", sender)
+#     print("instance", instance)
+#     print("kwargs", kwargs)
+#     print("created", created)
+
+#     if created:
+#         instance.is_completed = True
+#         instance.save()
+
+
+# --> pre_save
+@receiver(pre_save, sender=Task)
+def notify_task_creation(sender, instance, **kwargs):
+    print("sender", sender)
+    print("instance", instance)
+    print("kwargs", kwargs)
+
+    instance.is_completed = True
