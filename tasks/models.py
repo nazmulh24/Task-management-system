@@ -1,6 +1,7 @@
 from django.db import models
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save, pre_save, m2m_changed
 from django.dispatch import receiver
+from django.core.mail import send_mail
 
 
 class Task(models.Model):
@@ -82,10 +83,25 @@ class Employee(models.Model):
 
 
 # --> pre_save
-@receiver(pre_save, sender=Task)
-def notify_task_creation(sender, instance, **kwargs):
-    print("sender", sender)
-    print("instance", instance)
-    print("kwargs", kwargs)
+# @receiver(pre_save, sender=Task)
+# def notify_task_creation(sender, instance, **kwargs):
+#     print("sender", sender)
+#     print("instance", instance)
+#     print("kwargs", kwargs)
 
-    instance.is_completed = True
+#     instance.is_completed = True
+
+
+# -----> Sending Email
+@receiver(m2m_changed, sender=Task.assigned_to.through)
+def notify_employees_on_task_creation(sender, instance, action, **kwargs):
+    if action == "post_add":
+        assigned_emails = [emp.email for emp in instance.assigned_to.all()]
+
+        send_mail(
+            "New Task Assigned",
+            f"You have been assigned a new task : {instance.title}",
+            "snazmulhossains24@gmail.com",
+            assigned_emails,
+            fail_silently=False,
+        )
