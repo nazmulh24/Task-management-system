@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users | Log In</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+<body >
+
+    <div class="bg-white border-2 rounded-2xl shadow-lg p-8 w-full max-w-md mx-auto mt-10">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login to Your Account</h2>
+    
+        <form action="{% url 'sign-in' %}" method="POST" class="space-y-5">
+          {% csrf_token %}
+          
+          <div>
+            <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Username or Email</label>
+            <input type="text" id="username" name="username" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" />
+          </div>
+    
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <input type="password" id="password" name="password" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" />
+          </div>
+    
+          <button type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition duration-200">
+            Log In
+          </button>
+    
+          <p class="text-center text-sm text-gray-600 mt-4">
+            Don't have an account?
+            <a href="{% url 'sign-up' %}" class="text-blue-600 hover:underline font-medium">Register here</a>
+          </p>
+        </form>
+    </div>
+
+</body>
+</html>

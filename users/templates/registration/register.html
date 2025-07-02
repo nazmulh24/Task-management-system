@@ -6,11 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Users | Sign-Up</title>
-    {% comment %} <link rel="stylesheet" href="{% static 'css/output.css' %}"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
 <body>
 
-    <div class="w-2/3 mx-auto mt-10">
+    <div class="w-1/2 mx-auto mt-10">
         
         {% if form.non_field_errors %}
             <ul>
@@ -25,7 +25,7 @@
             {% comment %} {{form.as_p}} {% endcomment %}
 
             {% for field in form %}
-                <p>
+                <p class="mb-3">
                     <label for="{{field.id_for_label}}">
                         {{field.label}}
                     </label>
@@ -41,7 +41,7 @@
                 </p>
             {% endfor %}
 
-            <button type="submit" class="bg-blue-400 p-2">Sign Up</button>
+            <button type="submit" class="bg-blue-400 p-2 rounded-lg">Sign Up</button>
         </form>
 
     </div>
