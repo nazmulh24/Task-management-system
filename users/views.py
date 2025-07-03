@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from users.forms import RegisterForm, CustomRegisterForm, LoginForm
+from users.forms import RegisterForm, CustomRegisterForm, LoginForm, AssignRoleForm
 from django.contrib import messages
 from django.contrib.auth.tokens import default_token_generator
 
@@ -68,4 +68,30 @@ def activate_user(request, user_id, token):
 
 
 def admin_dashboard(request):
-    return render(request, "admin/dashboard.html")
+    users = User.objects.all()
+
+    context = {
+        "users": users,
+    }
+    return render(request, "admin/dashboard.html", context)
+
+
+def assign_role(request, user_id):
+    user = User.objects.get(id=user_id)
+    form = AssignRoleForm()
+
+    if request.method == "POST":
+        form = AssignRoleForm(request.POST)
+
+        if form.is_valid():
+            role = form.cleaned_data.get("role")
+            user.groups.clear()  # --> Remove old roles
+            user.groups.add(role)
+            messages.success(request, f"Role '{role}' assigned to {user.username}.")
+
+            return redirect("admin-dashboard")
+
+    context = {
+        "form": form,
+    }
+    return render(request, "admin/assign_role.html", context)

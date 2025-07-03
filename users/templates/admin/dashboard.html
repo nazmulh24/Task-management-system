@@ -101,9 +101,9 @@
     </header>
 
     <main>
-      <div class="container mx-auto px-6 py-4">
-        <p>Content goes here...</p>
-      </div>
+      {% block content %}
+        {% include "admin/user_list.html" %}
+      {% endblock content %}
     </main>
 
     <script>
