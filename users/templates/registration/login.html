@@ -1,39 +1,29 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users | Log In</title>
-    <link rel="stylesheet" href="{% static 'css/output.css' %}">
-</head>
-<body>
+{% extends "base.html" %}
 
-    <div class="bg-white border-2 rounded-2xl shadow-lg p-8 w-full max-w-md mx-auto mt-10">
-        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login to Your Account</h2>
+{% block content %}
+  <div class="bg-white border-2 rounded-2xl shadow-lg p-8 w-full max-w-md mx-auto my-10">
+      <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login to Your Account</h2>
 
-        {% if messages %}
-          {% for msg in messages %}
-            <div class="bg-green-200 text-green-600 p-4 rounded-md mb-4">{{ msg }}</div>
-          {% endfor %}
-        {% endif %}
-    
-        <form action="{% url 'sign-in' %}" method="POST" class="space-y-5">
-          {% csrf_token %}
+      {% if messages %}
+        {% for msg in messages %}
+          <div class="bg-green-200 text-green-600 p-4 rounded-md mb-4">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+  
+      <form action="{% url 'sign-in' %}" method="POST" class="space-y-5">
+        {% csrf_token %}
 
-          {{form.as_p}}
+        {{form.as_p}}
 
-          <button type="submit"
-            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition duration-200">
-            Log In
-          </button>
-    
-          <p class="text-center text-sm text-gray-600 mt-4">
-            Don't have an account?
-            <a href="{% url 'sign-up' %}" class="text-blue-600 hover:underline font-medium">Register here</a>
-          </p>
-        </form>
-    </div>
-
-</body>
-</html>
+        <button type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition duration-200">
+          Log In
+        </button>
+  
+        <p class="text-center text-sm text-gray-600 mt-4">
+          Don't have an account?
+          <a href="{% url 'sign-up' %}" class="text-blue-600 hover:underline font-medium">Register here</a>
+        </p>
+      </form>
+  </div>
+{% endblock content %}

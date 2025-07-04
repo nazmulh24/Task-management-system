@@ -55,7 +55,7 @@ def sign_in(request):
 def log_out(request):
     if request.method == "POST":
         logout(request)
-        return redirect("sign-in")
+        return redirect("Home")
 
 
 def activate_user(request, user_id, token):
