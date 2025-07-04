@@ -59,7 +59,7 @@
                 {% elif task.details.priority == 'L' %}
                 bg-red-100 text-red-700
                 {% endif %}">
-                {{ task.details.get_priority_display | upper}} PRIORITY
+                {{ task.details.get_priority_display | default:"No" | upper }} PRIORITY
               </span>
 
               <span class="px-3 py-1 rounded-full text-sm
