@@ -11,7 +11,7 @@ from tasks.views import (
 
 urlpatterns = [
     path("manager-dashboard/", manager_dashboard, name="mgr-dashboard"),
-    path("user-dashboard/", employee_dashboard),
+    path("user-dashboard/", employee_dashboard, name="user-dashboard"),
     path("create-task/", create_task, name="create-task"),
     path("view-task/", view_task),
     path("update-task/<int:id>/", update_task, name="update-task"),

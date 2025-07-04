@@ -13,11 +13,11 @@ from django.contrib.auth.decorators import (
 
 
 def is_manager(user):
-    return user.groups.filter(name="Manager").exists()
+    return user.is_authenticated and user.groups.filter(name="Manager").exists()
 
 
 def is_employee(user):
-    return user.groups.filter(name="Employee").exists()
+    return user.is_authenticated and user.groups.filter(name="Employee").exists()
 
 
 @user_passes_test(is_manager, login_url="no-permission")
