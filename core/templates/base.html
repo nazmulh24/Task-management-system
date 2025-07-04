@@ -24,10 +24,17 @@
   <body class="font-sans bg-gray-100">
     
     {% if request.user.is_authenticated %}
-      {% comment %} {% include "loged_header.html" %} {% endcomment %}
-      {% include "loged_header_m.html" %}
+      {% if request.user.groups.all.0.name == "Admin" %}
+        {% include "headers/admin_header.html" %}
+      {% elif request.user.groups.all.0.name == "Manager" %}
+        {% include "headers/manager_header.html" %}
+      {% elif request.user.groups.all.0.name == "Employee" %}
+        {% include "headers/employee_header.html" %}
+        {% comment %} {% else %}
+        {% include "headers/default_header.html" %} {% endcomment %}
+      {% endif %}
     {% else %}
-      {% include "non_loged_header.html" %}
+      {% include "headers/guest_header.html" %}
     {% endif %}
 
     <main>

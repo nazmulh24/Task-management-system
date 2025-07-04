@@ -6,19 +6,15 @@
         >
         <div class="hidden md:flex space-x-4">
           <a
-            href="{% url 'admin-dashboard' %}"
+            href="{% url 'user-dashboard' %}"
             class="text-gray-600 hover:text-gray-800"
             >Dashboard</a
           >
-          <a href="#" class="text-gray-600 hover:text-gray-800">Tasks</a>
-          <a href="{% url 'group-list' %}" class="text-gray-600 hover:text-gray-800"
-            >Groups</a
-          >
-          <a
-            href="{% url 'create-group' %}"
+          {% comment %} <a
+            href="{% url 'create-task' %}"
             class="text-gray-600 hover:text-gray-800"
-            >Create Group</a
-          >
+            >Create Task</a
+          > {% endcomment %}
         </div>
         <div class="flex items-center">
           <div class="relative">
@@ -37,7 +33,7 @@
               class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden"
             >
               <a
-                href="{% url 'admin-dashboard' %}"
+                href="{% url 'user-dashboard' %}"
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                 Dashboard
               </a>
@@ -74,18 +70,12 @@
       </div>
 
       <div id="mobile-menu" class="md:hidden hidden mt-4">
-        <a href="#" class="block py-2 text-gray-600 hover:text-gray-800"
+        <a href="{% url 'user-dashboard' %}" class="block py-2 text-gray-600 hover:text-gray-800"
           >Dashboard</a
         >
-        <a href="#" class="block py-2 text-gray-600 hover:text-gray-800"
-          >Tasks</a
-        >
-        <a href="#" class="block py-2 text-gray-600 hover:text-gray-800"
-          >Groups</a
-        >
-        <a href="#" class="block py-2 text-gray-600 hover:text-gray-800"
+        {% comment %} <a href="{% url 'create-task' %}" class="block py-2 text-gray-600 hover:text-gray-800"
           >Create Group</a
-        >
+        > {% endcomment %}
       </div>
     </nav>
 </header>
