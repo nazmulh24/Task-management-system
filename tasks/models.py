@@ -58,12 +58,12 @@ class Project(models.Model):
         return self.name
 
 
-class Employee(models.Model):
-    name = models.CharField(max_length=50)
-    email = models.EmailField(unique=True, max_length=254)
+# class Employee(models.Model):
+#     name = models.CharField(max_length=50)
+#     email = models.EmailField(unique=True, max_length=254)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 
 # ----------> Signals <------------

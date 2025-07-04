@@ -24,9 +24,10 @@
   <body class="font-sans bg-gray-100">
     
     {% if request.user.is_authenticated %}
-    {% include "loged_header.html" %}
+      {% comment %} {% include "loged_header.html" %} {% endcomment %}
+      {% include "loged_header_m.html" %}
     {% else %}
-    {% include "non_loged_header.html" %}
+      {% include "non_loged_header.html" %}
     {% endif %}
 
     <main>

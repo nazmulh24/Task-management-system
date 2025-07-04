@@ -18,15 +18,11 @@
 <!-- Task Table -->
 <div class="bg-white rounded-xl shadow-sm">
     <div class="grid grid-cols-12 p-5 text-sm text-gray-500 border-b border-gray-100">
-      <div class="col-span-3">TASK TITLE</div>
+      <div class="col-span-5">TASK TITLE</div>
       <div class="col-span-1">PRIORITY</div>
       <div class="col-span-2">STATUS</div>
-      <div class="col-span-2">TEAM</div>
-      <div class="col-span-2">CREATED AT</div>
-      <div class="col-span-2 gap-5">
-        MOD -->
-        <a href="{% url "create-task" %}" class="p-2 px-5 ml-3 border border-black rounded-lg text-white bg-green-400">Add</a>
-      </div>
+      <div class="col-span-3">TEAM</div>
+      <div class="col-span-1">CREATED AT</div>
     </div>
 
     <!-- Task Items -->
@@ -35,7 +31,7 @@
         <!-- Task Item 1 -->
         <div class="grid grid-cols-12 p-5 gap-4 items-center">
         <!-- Title -->
-        <div class="col-span-3 flex items-center gap-2 ps-1">
+        <div class="col-span-5 flex items-center gap-2 ps-1">
           {% if task.status == 'PENDING' %}
             <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
           {% elif task.status == 'COMPLETED' %}
@@ -69,27 +65,19 @@
             {% endif %}
         </div>
         <!-- Team -->
-        <div class="col-span-2">
+        <div class="col-span-3">
           <div class="flex -space-x-2">
             {% for emp in task.assigned_to.all %}
               <div
               class="w-8 h-8 rounded-full {% cycle 'bg-red-500' 'bg-green-500' 'bg-blue-500' 'bg-yellow-500' 'bg-purple-500' 'bg-pink-500'%} text-white flex justify-center items-center text-sm border-2 border-white">
-                {{emp.name|slice:":2"|upper}}
+                {{emp.username|slice:":2"|upper}}
               </div>
             {% endfor %}
           </div>
         </div>
         <!-- Created_date -->
-        <div class="col-span-2">
+        <div class="col-span-1">
           <span class="text-gray-500">{{task.created_at|timesince}}</span>
-        </div>
-        <!-- Modification -->
-        <div class= "flex gap-2 col-span-2">
-          <a href="{% url "update-task" task.id %}" class="p-2  border border-black rounded-lg bg-yellow-400">Edit</a>
-          <form action="{% url "delete-task" task.id %}" method="POST">
-          {% csrf_token %}
-            <button type="submit" class="p-2 border border-black rounded-lg bg-red-400">Delete</button>
-          </form>
         </div>
         </div>
       {% endfor %}

@@ -1,32 +1,67 @@
-{% load static %}
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task_form</title>
+{% block content %}
+  <div class="max-w-xl mx-auto my-10 bg-white shadow-lg rounded-xl p-8 border border-gray-200">
+    <h2 class="text-2xl font-semibold mb-6 text-center text-gray-700">Create New Task</h2>
 
-    <link rel="stylesheet" href="{% static 'css/output.css' %}">
-</head>
-<body>
-    <div class = "w-1/2 mx-auto mt-8">
-        <div>
-            {% if messages %}
-                {% for msg in messages %}
-                    <div class="px-2 py-1 {% if msg.tags == 'success' %}bg-green-500{% endif %}">{{msg}}</div>
-                {% endfor %}
-            {% endif %}
+    <!-- Flash Messages -->
+    {% if messages %}
+      {% for msg in messages %}
+        <div class="mb-4 px-4 py-2 rounded text-sm
+          {% if msg.tags == 'success' %}
+            bg-green-100 text-green-800 border border-green-300
+          {% elif msg.tags == 'error' %}
+            bg-red-100 text-red-800 border border-red-300
+          {% else %}
+            bg-gray-100 text-gray-800 border border-gray-300
+          {% endif %}">
+          {{ msg }}
         </div>
-    
-        <form method="POST"> 
-            {% comment %} <input type="text" class="border rounded-2 p-2 w-full"> {% endcomment %}
+      {% endfor %}
+    {% endif %}
 
-            {% csrf_token %}
-            {{ task_form }}
-            {{ task_detail_form}}
-            <button type="submit" class="mb-4 text-white bg-red-500 mt-3 p-2 rounded-lg">Submit</button>
-        </form>
-    </div>
-</body>
-</html>
+    <!-- Form -->
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+
+      <!-- Render Task Form Fields -->
+      {% for field in task_form %}
+        <div>
+          <label for="{{ field.id_for_label }}" class="block text-sm font-medium mb-1">
+            {{ field.label }}
+          </label>
+          {{ field }}
+          {% if field.errors %}
+            <ul class="text-red-500 text-sm mt-1">
+              {% for error in field.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <!-- Render Task Detail Fields -->
+      {% for field in task_detail_form %}
+        <div>
+          <label for="{{ field.id_for_label }}" class="block text-sm font-medium mb-1">
+            {{ field.label }}
+          </label>
+          {{ field }}
+          {% if field.errors %}
+            <ul class="text-red-500 text-sm mt-1">
+              {% for error in field.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <button type="submit"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition duration-200">
+        Submit Task
+      </button>
+    </form>
+  </div>
+{% endblock content %}
