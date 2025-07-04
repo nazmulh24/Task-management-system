@@ -35,7 +35,9 @@ class StyleFormMixin:
         super().__init__(*args, **kwargs)
         self.apply_style_widgets()
 
-    default_classes = "border-2 border-gray-300 p-2 rounded-lg shadow-sm focus:border-green-400"
+    default_classes = (
+        "border-2 border-gray-300 p-2 rounded-lg shadow-sm focus:border-green-400"
+    )
 
     def apply_style_widgets(self):
         for field_name, field in self.fields.items():
@@ -93,4 +95,4 @@ class TaskModelForm(StyleFormMixin, forms.ModelForm):
 class TaskDetailModelForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = TaskDetail
-        fields = ["priority", "notes"]
+        fields = ["priority", "notes", "asset"]
