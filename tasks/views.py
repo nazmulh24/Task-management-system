@@ -144,4 +144,19 @@ def view_task(request):
 @permission_required("tasks.view_task", login_url="no-permission")
 def task_details(request, task_id):
     task = Task.objects.get(id=task_id)
-    return render(request, "task_details.html", {"task": task})
+    status_choise = Task.STATUS_OPTIONS
+    if request.method == "POST":
+        select_status = request.POST.get("task_status")
+        task.status = select_status
+        task.save()
+
+        return redirect("task-details", task.id)
+
+    return render(
+        request,
+        "task_details.html",
+        {
+            "task": task,
+            "status_choise": status_choise,
+        },
+    )

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Task-Details{% endblock title %}Task-Details
 
@@ -27,21 +28,24 @@
           Task Detail
         </button>
         <div class="flex items-center gap-2">
-          <select
-            name="task_status"
-            id="task_status"
-            class="px-4 py-2 border rounded-md"
-          >
-            <option value="pending">Pending</option>
-            <option value="in_progress">In Progress</option>
-            <option value="completed">Completed</option>
-          </select>
-          <button
-            class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-            type="submit"
-          >
-            Change Status
-          </button>
+          <form method="post">
+            {% csrf_token %}
+            <select
+              name="task_status"
+              id="task_status"
+              class="px-4 py-2 border rounded-md"
+              >
+              {% for value, label in status_choise %}
+                <option value="{{value}}">{{label}}</option>
+              {% endfor %}
+            </select>
+            <button
+              class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              type="submit"
+              >
+              Change Status
+            </button>
+          </form>
         </div>
       </div>
 
@@ -95,20 +99,12 @@
                 {% endfor %}
               </div>
             </div>
-            <div>
-              <button
-                class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-                type="submit"
-              >
-                Delete Task
-              </button>
-            </div>
-             <!-- Modification -->
-            <div class= "flex gap-2 col-span-2">
-              <a href="{% url "update-task" task.id %}" class="p-2  border border-black rounded-lg bg-yellow-400">Edit</a>
+            <!-- Modification -->
+            <div class="flex justify-end items-right gap-5">
+              <a href="{% url "update-task" task.id %}" class="px-4 py-2 rounded-md bg-yellow-500 text-white hover:bg-yellow-600">Edit Task</a>
               <form action="{% url "delete-task" task.id %}" method="POST">
-              {% csrf_token %}
-                <button type="submit" class="p-2 border border-black rounded-lg bg-red-400">Delete</button>
+                {% csrf_token %}
+                  <button type="submit" class="px-4 py-2 rounded-md bg-red-500 text-white hover:bg-red-600">Delete Task</button>
               </form>
             </div>
           </div>
@@ -128,11 +124,11 @@
           <div class="bg-white p-6 rounded-lg shadow-sm">
             <h2 class="text-xl font-bold mb-4">ASSETS</h2>
             <div class="space-y-4">
-              <img
-                src={{task.details.asset.url}}
-                alt="Task Manager App Screenshot 1"
-                class="w-full rounded-lg"
-              />
+              {% if task.details.asset %}
+                <img src="{{ task.details.asset.url }}" alt="Asset Image" class="w-full rounded-lg"/>
+              {% else %}
+                <img src="{% static 'images/default_img.jpg' %}" alt="Default Image" class="w-full rounded-lg"/>
+              {% endif %}
             </div>
           </div>
         </div>
