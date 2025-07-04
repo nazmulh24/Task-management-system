@@ -138,3 +138,10 @@ def view_task(request):
     task_cnt = Project.objects.annotate(num_task=Count("task")).order_by("num_task")
 
     return render(request, "show_task.html", {"task_cnt": task_cnt})
+
+
+@login_required
+@permission_required("tasks.view_task", login_url="no-permission")
+def task_details(request, task_id):
+    task = Task.objects.get(id=task_id)
+    return render(request, "task_details.html", {"task": task})
