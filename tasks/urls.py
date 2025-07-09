@@ -11,6 +11,7 @@ from tasks.views import (
     UpdateTask,
     ViewProject,
     TaskDetails,
+    UpdateTask_Generic,
 )
 
 
@@ -24,6 +25,7 @@ urlpatterns = [
     # path("task/<int:task_id>/details/", task_details, name="task-details"),
     path("task/<int:task_id>/details/", TaskDetails.as_view(), name="task-details"),
     # path("update-task/<int:id>/", update_task, name="update-task"),
-    path("update-task/<int:id>/", UpdateTask.as_view(), name="update-task"),
+    # path("update-task/<int:id>/", UpdateTask.as_view(), name="update-task"),
+    path("update-task/<int:id>/", UpdateTask_Generic.as_view(), name="update-task"),
     path("delete-task/<int:id>/", delete_task, name="delete-task"),
 ]
