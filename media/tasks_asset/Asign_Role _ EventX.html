@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)http://127.0.0.1:8000/users/admin/view-role/ -->
+<html lang="en" foxified=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asign_Role | EventX</title>
+
+    
+
+
+<!-- Font Awesome icons (v6.5.0) -->
+<link rel="stylesheet" href="./Asign_Role _ EventX_files/all.min.css">
+
+<!-- Google Fonts preconnection for faster font loading -->
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+
+<!-- Custom stylesheet (nazmul.css) from Django static folder -->
+<link rel="stylesheet" href="./Asign_Role _ EventX_files/nazmul.css">
+
+<!-- Custom fonts: Inter, Montserrat, Roboto Mono -->
+<link href="./Asign_Role _ EventX_files/css2" rel="stylesheet">
+
+<!-- DaisyUI themes (light/dark/custom themes support) -->
+<link href="./Asign_Role _ EventX_files/themes.css" rel="stylesheet" type="text/css">
+
+<!-- DaisyUI v5 styles for Tailwind-based UI components -->
+<link href="./Asign_Role _ EventX_files/daisyui@5" rel="stylesheet" type="text/css">
+
+
+<!-- We build custom Tailwind(css) cdn -->
+<link rel="stylesheet" href="./Asign_Role _ EventX_files/output.css">
+
+
+<script src="./Asign_Role _ EventX_files/script.js" defer=""></script>
+
+
+  </head>
+  <body class="max-w-[1400px] mx-auto bg-gray-50" cz-shortcut-listen="true">
+    
+
+  
+    <header class="sticky top-0 z-50">
+  <nav class="bg-gray-100 border-b border-orange-400 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="flex justify-between items-center h-24">
+        <!-- Logo -->
+        <div class="text-2xl font-semibold text-orange-600">EventX</div>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button id="mobile-menu-button" class="text-orange-600 focus:outline-none" onclick="document.getElementById(&#39;mobile-menu&#39;).classList.toggle(&#39;hidden&#39;)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center space-x-6 text-lg text-gray-700">
+          <a href="http://127.0.0.1:8000/users/admin/dashboard/" class="hover:text-orange-600 font-medium">Dashboard</a>
+          <a href="http://127.0.0.1:8000/events/view-category/" class="hover:text-orange-600 font-medium">Categories</a>
+          <a href="http://127.0.0.1:8000/events/view-participant/" class="hover:text-orange-600 font-medium">Manage Users</a>
+          <a href="http://127.0.0.1:8000/users/admin/view-role/" class="hover:text-orange-600 font-medium">Assign Role</a>
+          <a href="http://127.0.0.1:8000/users/admin/group-list/" class="hover:text-orange-600 font-medium">Groups</a>
+          <a href="http://127.0.0.1:8000/users/admin/create-group/" class="hover:text-orange-600 font-medium">Create Group</a>
+
+          <div class="flex items-center">
+            <div class="relative">
+              
+              <button id="user-menu-button" class="w-10 h-10 bg-orange-200 rounded-full flex items-center justify-center hover:bg-orange-300">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6 text-orange-600">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.118a7.5 7.5 0 0 1 15 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.5-1.632Z"></path>
+                </svg>
+              </button>
+              <div id="user-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden">
+                <a href="http://127.0.0.1:8000/users/admin/dashboard/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  Dashboard
+                </a>
+                <form method="post" action="http://127.0.0.1:8000/users/sign-out/">
+                  <input type="hidden" name="csrfmiddlewaretoken" value="RGeNkAVO3besXpTCwMo9fSlYi7gYH19TBEc5R8kHLuMPgLXOizKc6l8BfyAvGLKQ">
+                  <button class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    Logout
+                  </button>
+                </form>
+              </div>
+            </div>
+            <div class="md:hidden ml-4">
+              <button id="menu-toggle" class="text-gray-600 hover:text-gray-800 focus:outline-none">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="md:hidden hidden px-4 pb-4 pt-2 bg-gray-100 border-t border-orange-300 transition-all duration-300 ease-in-out">
+      <a href="http://127.0.0.1:8000/users/admin/dashboard/" class="block py-2 hover:text-orange-600">Dashboard</a>
+      <a href="http://127.0.0.1:8000/events/view-category/" class="block py-2 hover:text-orange-600">Categories</a>
+      <a href="http://127.0.0.1:8000/events/view-participant/" class="block py-2 hover:text-orange-600">Manage Users</a>
+      <a href="http://127.0.0.1:8000/events/view-event/" class="block py-2 hover:text-orange-600">Assign Role</a>
+      <a href="http://127.0.0.1:8000/users/admin/group-list/" class="block py-2 hover:text-orange-600">Groups</a>
+      <a href="http://127.0.0.1:8000/users/admin/create-group/" class="block py-2 hover:text-orange-600">Create Group</a>
+    </div>
+  </nav>
+</header>
+
+  
+
+
+    
+    <main>
+      
+        <div class="container mx-auto p-6">
+          <div class="overflow-x-auto">
+            <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+              <thead class="bg-gray-100">
+                <tr>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Number
+                  </th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Username
+                  </th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Email
+                  </th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    User ID
+                  </th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Current Role
+                  </th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                
+                  <tr class="hover:bg-gray-50">
+                      <td class="px-4 py-4 whitespace-nowrap">1</td>
+                      <td class="px-4 py-4 whitespace-nowrap">Nazmul Hossain</td>
+                      <td class="px-4 py-4 whitespace-nowrap">nazmulhossain_24@icloud.com</td>
+                      <td class="px-4 py-4 whitespace-nowrap">2</td>
+                      <td class="px-4 py-4 whitespace-nowrap">Participant</td>
+                      <td class="px-4 py-4 whitespace-nowrap">
+                      <a href="http://127.0.0.1:8000/users/admin/2/assign-role/" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                          Change Role
+                      </a>
+                      </td>
+                  </tr>
+                
+                  <tr class="hover:bg-gray-50">
+                      <td class="px-4 py-4 whitespace-nowrap">2</td>
+                      <td class="px-4 py-4 whitespace-nowrap">Nazmul Hossain</td>
+                      <td class="px-4 py-4 whitespace-nowrap">snazmulhossains24@gmail.com</td>
+                      <td class="px-4 py-4 whitespace-nowrap">1</td>
+                      <td class="px-4 py-4 whitespace-nowrap">Admin</td>
+                      <td class="px-4 py-4 whitespace-nowrap">
+                      <a href="http://127.0.0.1:8000/users/admin/1/assign-role/" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                          Change Role
+                      </a>
+                      </td>
+                  </tr>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      
+    </main>
+
+    <footer class="bg-black text-gray-400 pt-12 px-4 sm:px-8 md:px-20">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-10 border-b border-gray-700">
+    <!-- Logo & Description -->
+    <div>
+      <h2 class="text-2xl font-bold text-white">
+        <span class="text-orange-600">Event</span>X
+      </h2>
+      <p class="mt-4 text-sm leading-6">
+        Discover, create, and participate in events around you.
+      </p>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <h3 class="text-white font-semibold mb-3">Quick Links</h3>
+      <ul class="space-y-2 text-sm">
+        <li><a href="http://127.0.0.1:8000/users/admin/view-role/#" class="hover:text-white">Home</a></li>
+        <li><a href="http://127.0.0.1:8000/users/admin/view-role/#" class="hover:text-white">Dashboard</a></li>
+        <li><a href="http://127.0.0.1:8000/users/admin/view-role/#" class="hover:text-white">Events</a></li>
+        <li><a href="http://127.0.0.1:8000/users/admin/view-role/#" class="hover:text-white">About Us</a></li>
+      </ul>
+    </div>
+
+    <!-- Legal -->
+    <div>
+      <h3 class="text-white font-semibold mb-3">Legal</h3>
+      <ul class="space-y-2 text-sm">
+        <li><a href="http://127.0.0.1:8000/users/admin/view-role/#" class="hover:text-white">Privacy Policy</a></li>
+        <li><a href="http://127.0.0.1:8000/users/admin/view-role/#" class="hover:text-white">Terms of Service</a></li>
+        <li><a href="http://127.0.0.1:8000/users/admin/view-role/#" class="hover:text-white">Cookie Policy</a></li>
+      </ul>
+    </div>
+
+    <!-- Social & Newsletter -->
+    <div>
+      <h3 class="text-white font-semibold mb-3">Connect With Us</h3>
+      <div class="flex space-x-4 mb-4 text-xl">
+        <a href="http://127.0.0.1:8000/users/admin/view-role/#" class="hover:text-white"><i class="fab fa-facebook-f"></i></a>
+        <a href="http://127.0.0.1:8000/users/admin/view-role/#" class="hover:text-white"><i class="fab fa-twitter"></i></a>
+        <a href="http://127.0.0.1:8000/users/admin/view-role/#" class="hover:text-white"><i class="fab fa-instagram"></i></a>
+        <a href="http://127.0.0.1:8000/users/admin/view-role/#" class="hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <p class="text-sm mb-2">Subscribe to our newsletter</p>
+      <form class="flex flex-col sm:flex-row gap-2">
+        <input type="email" placeholder="Your email" class="px-4 py-2 bg-gray-800 text-white rounded-md w-full text-sm focus:outline-none">
+        <button type="submit" class="bg-white text-black px-4 py-2 rounded-md text-sm hover:bg-gray-200">
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bottom Footer -->
+  <div class="text-center text-sm text-gray-500 py-6">
+    © 2025 EventX. All rights reserved.
+  </div>
+</footer>
+
+
+
+<link rel="stylesheet" href="./Asign_Role _ EventX_files/print.css" media="print">
+<link rel="stylesheet" href="./Asign_Role _ EventX_files/toolbar.css">
+
+
+<script type="module" src="./Asign_Role _ EventX_files/toolbar.js" async=""></script>
+
+<div id="djDebug" class="" dir="ltr" data-store-id="e15923a064d1479fa35009a6c62f3e8d" data-render-panel-url="/__debug__/render_panel/" data-sidebar-url="/__debug__/history_sidebar/" data-default-show="true" data-update-on-fetch="False" data-theme="light" data-user-theme="auto">
+  <div class="djdt-hidden" id="djDebugToolbar">
+    <ul id="djDebugPanelList">
+      <li><a id="djHideToolBarButton" href="http://127.0.0.1:8000/users/admin/view-role/#" title="Hide toolbar">Hide »</a></li>
+      <li>
+        <a id="djToggleThemeButton" href="http://127.0.0.1:8000/users/admin/view-role/#" title="Toggle Theme">
+          Toggle Theme <svg aria-hidden="true" class="djdt-hidden theme-auto" fill="currentColor" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 16q0 3.264 1.28 6.24t3.392 5.088 5.12 3.424 6.208 1.248q3.264 0 6.24-1.248t5.088-3.424 3.392-5.088 1.28-6.24-1.28-6.208-3.392-5.12-5.088-3.392-6.24-1.28q-3.264 0-6.208 1.28t-5.12 3.392-3.392 5.12-1.28 6.208zM4 16q0-3.264 1.6-6.016t4.384-4.352 6.016-1.632 6.016 1.632 4.384 4.352 1.6 6.016-1.6 6.048-4.384 4.352-6.016 1.6-6.016-1.6-4.384-4.352-1.6-6.048zM16 26.016q2.72 0 5.024-1.344t3.648-3.648 1.344-5.024-1.344-4.992-3.648-3.648-5.024-1.344v20z"></path>
+</svg>
+<svg aria-hidden="true" class="djdt-hidden theme-light" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.25C12.4142 1.25 12.75 1.58579 12.75 2V4C12.75 4.41421 12.4142 4.75 12 4.75C11.5858 4.75 11.25 4.41421 11.25 4V2C11.25 1.58579 11.5858 1.25 12 1.25ZM3.66865 3.71609C3.94815 3.41039 4.42255 3.38915 4.72825 3.66865L6.95026 5.70024C7.25596 5.97974 7.2772 6.45413 6.9977 6.75983C6.7182 7.06553 6.2438 7.08677 5.9381 6.80727L3.71609 4.77569C3.41039 4.49619 3.38915 4.02179 3.66865 3.71609ZM20.3314 3.71609C20.6109 4.02179 20.5896 4.49619 20.2839 4.77569L18.0619 6.80727C17.7562 7.08677 17.2818 7.06553 17.0023 6.75983C16.7228 6.45413 16.744 5.97974 17.0497 5.70024L19.2718 3.66865C19.5775 3.38915 20.0518 3.41039 20.3314 3.71609ZM12 7.75C9.65279 7.75 7.75 9.65279 7.75 12C7.75 14.3472 9.65279 16.25 12 16.25C14.3472 16.25 16.25 14.3472 16.25 12C16.25 9.65279 14.3472 7.75 12 7.75ZM6.25 12C6.25 8.82436 8.82436 6.25 12 6.25C15.1756 6.25 17.75 8.82436 17.75 12C17.75 15.1756 15.1756 17.75 12 17.75C8.82436 17.75 6.25 15.1756 6.25 12ZM1.25 12C1.25 11.5858 1.58579 11.25 2 11.25H4C4.41421 11.25 4.75 11.5858 4.75 12C4.75 12.4142 4.41421 12.75 4 12.75H2C1.58579 12.75 1.25 12.4142 1.25 12ZM19.25 12C19.25 11.5858 19.5858 11.25 20 11.25H22C22.4142 11.25 22.75 11.5858 22.75 12C22.75 12.4142 22.4142 12.75 22 12.75H20C19.5858 12.75 19.25 12.4142 19.25 12ZM17.0255 17.0252C17.3184 16.7323 17.7933 16.7323 18.0862 17.0252L20.3082 19.2475C20.6011 19.5404 20.601 20.0153 20.3081 20.3082C20.0152 20.6011 19.5403 20.601 19.2475 20.3081L17.0255 18.0858C16.7326 17.7929 16.7326 17.3181 17.0255 17.0252ZM6.97467 17.0253C7.26756 17.3182 7.26756 17.7931 6.97467 18.086L4.75244 20.3082C4.45955 20.6011 3.98468 20.6011 3.69178 20.3082C3.39889 20.0153 3.39889 19.5404 3.69178 19.2476L5.91401 17.0253C6.2069 16.7324 6.68177 16.7324 6.97467 17.0253ZM12 19.25C12.4142 19.25 12.75 19.5858 12.75 20V22C12.75 22.4142 12.4142 22.75 12 22.75C11.5858 22.75 11.25 22.4142 11.25 22V20C11.25 19.5858 11.5858 19.25 12 19.25Z" fill="currentColor"></path>
+</svg>
+<svg aria-hidden="true" class="djdt-hidden theme-dark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M3.32031 11.6835C3.32031 16.6541 7.34975 20.6835 12.3203 20.6835C16.1075 20.6835 19.3483 18.3443 20.6768 15.032C19.6402 15.4486 18.5059 15.6834 17.3203 15.6834C12.3497 15.6834 8.32031 11.654 8.32031 6.68342C8.32031 5.50338 8.55165 4.36259 8.96453 3.32996C5.65605 4.66028 3.32031 7.89912 3.32031 11.6835Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+
+        </a>
+      </li>
+      
+        
+
+<li id="djdt-HistoryPanel" class="djDebugPanelButton">
+  <input type="checkbox" data-cookie="djdtHistoryPanel" checked="" title="Disable for next and successive requests">
+  
+    <a href="http://127.0.0.1:8000/users/admin/view-role/#" title="History" class="HistoryPanel">
+  
+  History
+  
+    
+      <br><small>/users/admin/view-role/</small>
+    
+  
+  
+    </a>
+  
+</li>
+
+      
+        
+
+<li id="djdt-VersionsPanel" class="djDebugPanelButton">
+  <input type="checkbox" data-cookie="djdtVersionsPanel" checked="" title="Disable for next and successive requests">
+  
+    <a href="http://127.0.0.1:8000/users/admin/view-role/#" title="Versions" class="VersionsPanel">
+  
+  Versions
+  
+    
+      <br><small>Django 5.2.1</small>
+    
+  
+  
+    </a>
+  
+</li>
+
+      
+        
+
+<li id="djdt-TimerPanel" class="djDebugPanelButton">
+  <input type="checkbox" data-cookie="djdtTimerPanel" checked="" title="Disable for next and successive requests">
+  
+    <a href="http://127.0.0.1:8000/users/admin/view-role/#" title="Time" class="TimerPanel">
+  
+  Time
+  
+    
+      <br><small>CPU: 19.20ms (30.72ms)</small>
+    
+  
+  
+    </a>
+  
+</li>
+
+      
+        
+
+<li id="djdt-SettingsPanel" class="djDebugPanelButton">
+  <input type="checkbox" data-cookie="djdtSettingsPanel" checked="" title="Disable for next and successive requests">
+  
+    <a href="http://127.0.0.1:8000/users/admin/view-role/#" title="Settings from event_management.settings" class="SettingsPanel">
+  
+  Settings
+  
+    
+      
+    
+  
+  
+    </a>
+  
+</li>
+
+      
+        
+
+<li id="djdt-HeadersPanel" class="djDebugPanelButton">
+  <input type="checkbox" data-cookie="djdtHeadersPanel" checked="" title="Disable for next and successive requests">
+  
+    <a href="http://127.0.0.1:8000/users/admin/view-role/#" title="Headers" class="HeadersPanel">
+  
+  Headers
+  
+    
+      
+    
+  
+  
+    </a>
+  
+</li>
+
+      
+        
+
+<li id="djdt-RequestPanel" class="djDebugPanelButton">
+  <input type="checkbox" data-cookie="djdtRequestPanel" checked="" title="Disable for next and successive requests">
+  
+    <a href="http://127.0.0.1:8000/users/admin/view-role/#" title="Request" class="RequestPanel">
+  
+  Request
+  
+    
+      <br><small>view_role</small>
+    
+  
+  
+    </a>
+  
+</li>
+
+      
+        
+
+<li id="djdt-SQLPanel" class="djDebugPanelButton">
+  <input type="checkbox" data-cookie="djdtSQLPanel" checked="" title="Disable for next and successive requests">
+  
+    <a href="http://127.0.0.1:8000/users/admin/view-role/#" title="SQL queries from 1 connection" class="SQLPanel">
+  
+  SQL
+  
+    
+      <br><small>6 queries in 6.18ms</small>
+    
+  
+  
+    </a>
+  
+</li>
+
+      
+        
+
+<li id="djdt-StaticFilesPanel" class="djDebugPanelButton">
+  <input type="checkbox" data-cookie="djdtStaticFilesPanel" checked="" title="Disable for next and successive requests">
+  
+    <a href="http://127.0.0.1:8000/users/admin/view-role/#" title="Static files (142 found, 3 used)" class="StaticFilesPanel">
+  
+  Static files
+  
+    
+      <br><small>3 files used</small>
+    
+  
+  
+    </a>
+  
+</li>
+
+      
+        
+
+<li id="djdt-TemplatesPanel" class="djDebugPanelButton">
+  <input type="checkbox" data-cookie="djdtTemplatesPanel" checked="" title="Disable for next and successive requests">
+  
+    <a href="http://127.0.0.1:8000/users/admin/view-role/#" title="Templates (5 rendered)" class="TemplatesPanel">
+  
+  Templates
+  
+    
+      <br><small>admin/user_list.html</small>
+    
+  
+  
+    </a>
+  
+</li>
+
+      
+        
+
+<li id="djdt-AlertsPanel" class="djDebugPanelButton">
+  <input type="checkbox" data-cookie="djdtAlertsPanel" checked="" title="Disable for next and successive requests">
+  
+    <a href="http://127.0.0.1:8000/users/admin/view-role/#" title="Alerts" class="AlertsPanel">
+  
+  Alerts
+  
+    
+      
+    
+  
+  
+    </a>
+  
+</li>
+
+      
+        
+
+<li id="djdt-CachePanel" class="djDebugPanelButton">
+  <input type="checkbox" data-cookie="djdtCachePanel" checked="" title="Disable for next and successive requests">
+  
+    <a href="http://127.0.0.1:8000/users/admin/view-role/#" title="Cache calls from 1 backend" class="CachePanel">
+  
+  Cache
+  
+    
+      <br><small>0 calls in 0.00ms</small>
+    
+  
+  
+    </a>
+  
+</li>
+
+      
+        
+
+<li id="djdt-SignalsPanel" class="djDebugPanelButton">
+  <input type="checkbox" data-cookie="djdtSignalsPanel" checked="" title="Disable for next and successive requests">
+  
+    <a href="http://127.0.0.1:8000/users/admin/view-role/#" title="Signals" class="SignalsPanel">
+  
+  Signals
+  
+    
+      <br><small>36 receivers of 15 signals</small>
+    
+  
+  
+    </a>
+  
+</li>
+
+      
+        
+
+<li id="djdt-RedirectsPanel" class="djDebugPanelButton">
+  <input type="checkbox" data-cookie="djdtRedirectsPanel" title="Enable for next and successive requests">
+  
+    <div class="djdt-contentless djdt-disabled">
+  
+  Intercept redirects
+  
+  
+    </div>
+  
+</li>
+
+      
+        
+
+<li id="djdt-ProfilingPanel" class="djDebugPanelButton">
+  <input type="checkbox" data-cookie="djdtProfilingPanel" title="Enable for next and successive requests">
+  
+    <div class="djdt-contentless djdt-disabled">
+  
+  Profiling
+  
+  
+    </div>
+  
+</li>
+
+      
+    </ul>
+  </div>
+  <div class="" id="djDebugToolbarHandle" style="top: 266px;">
+    <div title="Show toolbar" id="djShowToolBarButton">
+      <span id="djShowToolBarD">D</span><span id="djShowToolBarJ">J</span>DT
+    </div>
+  </div>
+
+  
+    
+
+
+  <div id="HistoryPanel" class="djdt-panelContent djdt-hidden">
+    <div class="djDebugPanelTitle">
+      <h3>History</h3>
+      <button type="button" class="djDebugClose">×</button>
+    </div>
+    <div class="djDebugPanelContent">
+      
+        <div class="djdt-loader"></div>
+        <div class="djdt-scroll"></div>
+      
+    </div>
+  </div>
+
+
+  
+    
+
+
+  <div id="VersionsPanel" class="djdt-panelContent djdt-hidden">
+    <div class="djDebugPanelTitle">
+      <h3>Versions</h3>
+      <button type="button" class="djDebugClose">×</button>
+    </div>
+    <div class="djDebugPanelContent">
+      
+        <div class="djdt-loader"></div>
+        <div class="djdt-scroll"></div>
+      
+    </div>
+  </div>
+
+
+  
+    
+
+
+  <div id="TimerPanel" class="djdt-panelContent djdt-hidden">
+    <div class="djDebugPanelTitle">
+      <h3>Time</h3>
+      <button type="button" class="djDebugClose">×</button>
+    </div>
+    <div class="djDebugPanelContent">
+      
+        <div class="djdt-loader"></div>
+        <div class="djdt-scroll"></div>
+      
+    </div>
+  </div>
+
+
+  
+    
+
+
+  <div id="SettingsPanel" class="djdt-panelContent djdt-hidden">
+    <div class="djDebugPanelTitle">
+      <h3>Settings from event_management.settings</h3>
+      <button type="button" class="djDebugClose">×</button>
+    </div>
+    <div class="djDebugPanelContent">
+      
+        <div class="djdt-loader"></div>
+        <div class="djdt-scroll"></div>
+      
+    </div>
+  </div>
+
+
+  
+    
+
+
+  <div id="HeadersPanel" class="djdt-panelContent djdt-hidden">
+    <div class="djDebugPanelTitle">
+      <h3>Headers</h3>
+      <button type="button" class="djDebugClose">×</button>
+    </div>
+    <div class="djDebugPanelContent">
+      
+        <div class="djdt-loader"></div>
+        <div class="djdt-scroll"></div>
+      
+    </div>
+  </div>
+
+
+  
+    
+
+
+  <div id="RequestPanel" class="djdt-panelContent djdt-hidden">
+    <div class="djDebugPanelTitle">
+      <h3>Request</h3>
+      <button type="button" class="djDebugClose">×</button>
+    </div>
+    <div class="djDebugPanelContent">
+      
+        <div class="djdt-loader"></div>
+        <div class="djdt-scroll"></div>
+      
+    </div>
+  </div>
+
+
+  
+    
+
+
+  <div id="SQLPanel" class="djdt-panelContent djdt-hidden">
+    <div class="djDebugPanelTitle">
+      <h3>SQL queries from 1 connection</h3>
+      <button type="button" class="djDebugClose">×</button>
+    </div>
+    <div class="djDebugPanelContent">
+      
+        <div class="djdt-loader"></div>
+        <div class="djdt-scroll"></div>
+      
+    </div>
+  </div>
+
+
+  
+    
+
+
+  <div id="StaticFilesPanel" class="djdt-panelContent djdt-hidden">
+    <div class="djDebugPanelTitle">
+      <h3>Static files (142 found, 3 used)</h3>
+      <button type="button" class="djDebugClose">×</button>
+    </div>
+    <div class="djDebugPanelContent">
+      
+        <div class="djdt-loader"></div>
+        <div class="djdt-scroll"></div>
+      
+    </div>
+  </div>
+
+
+  
+    
+
+
+  <div id="TemplatesPanel" class="djdt-panelContent djdt-hidden">
+    <div class="djDebugPanelTitle">
+      <h3>Templates (5 rendered)</h3>
+      <button type="button" class="djDebugClose">×</button>
+    </div>
+    <div class="djDebugPanelContent">
+      
+        <div class="djdt-loader"></div>
+        <div class="djdt-scroll"></div>
+      
+    </div>
+  </div>
+
+
+  
+    
+
+
+  <div id="AlertsPanel" class="djdt-panelContent djdt-hidden">
+    <div class="djDebugPanelTitle">
+      <h3>Alerts</h3>
+      <button type="button" class="djDebugClose">×</button>
+    </div>
+    <div class="djDebugPanelContent">
+      
+        <div class="djdt-loader"></div>
+        <div class="djdt-scroll"></div>
+      
+    </div>
+  </div>
+
+
+  
+    
+
+
+  <div id="CachePanel" class="djdt-panelContent djdt-hidden">
+    <div class="djDebugPanelTitle">
+      <h3>Cache calls from 1 backend</h3>
+      <button type="button" class="djDebugClose">×</button>
+    </div>
+    <div class="djDebugPanelContent">
+      
+        <div class="djdt-loader"></div>
+        <div class="djdt-scroll"></div>
+      
+    </div>
+  </div>
+
+
+  
+    
+
+
+  <div id="SignalsPanel" class="djdt-panelContent djdt-hidden">
+    <div class="djDebugPanelTitle">
+      <h3>Signals</h3>
+      <button type="button" class="djDebugClose">×</button>
+    </div>
+    <div class="djDebugPanelContent">
+      
+        <div class="djdt-loader"></div>
+        <div class="djdt-scroll"></div>
+      
+    </div>
+  </div>
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+  <div id="djDebugWindow" class="djdt-panelContent djdt-hidden"></div>
+</div>
+
+
+</body></html>
