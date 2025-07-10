@@ -8,15 +8,16 @@ from users.views import (
     assign_role,
     create_group,
     group_list,
+    CustomLogin,
+    ProfileView,
 )
-from django.contrib.auth.views import LoginView
 
 urlpatterns = [
     path("sign-up/", sign_up, name="sign-up"),
     # path("sign-in/", sign_in, name="sign-in"),
     path(
         "sign-in/",
-        LoginView.as_view(
+        CustomLogin.as_view(
             # template_name="registration/login.html",
         ),
         name="sign-in",
@@ -27,4 +28,5 @@ urlpatterns = [
     path("admin/<int:user_id>/assign-role/", assign_role, name="assign-role"),
     path("admin/create-group/", create_group, name="create-group"),
     path("admin/group-list/", group_list, name="group-list"),
+    path("profile/", ProfileView.as_view(), name="profile"),
 ]
