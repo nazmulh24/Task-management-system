@@ -53,11 +53,11 @@ def sign_in(request):
     return render(request, "registration/login.html", context)
 
 
-class CustomLogin(LoginView):
+class CustomLoginView(LoginView):
     form_class = LoginForm
 
     def get_success_url(self):
-        next_url = self.request.GET.get("next")  # --------> Problem Here...
+        next_url = self.request.POST.get("next")  # --------> Problem Here...
         print(next_url)
         return next_url if next_url else super().get_success_url()
 

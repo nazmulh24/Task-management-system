@@ -10,13 +10,13 @@
         {% endfor %}
       {% endif %}
   
-      <form action="{% url 'sign-in' %}" method="POST" class="space-y-5">
+      <form method="POST" class="space-y-5">
         {% csrf_token %}
 
         {{form.as_p}}
 
         <button type="submit"
-          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition duration-200">
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition duration-200"> 
           Log In
         </button>
   

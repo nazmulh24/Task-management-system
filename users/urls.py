@@ -8,7 +8,7 @@ from users.views import (
     assign_role,
     create_group,
     group_list,
-    CustomLogin,
+    CustomLoginView,
     ProfileView,
 )
 from django.contrib.auth.views import LogoutView
@@ -18,7 +18,7 @@ urlpatterns = [
     # path("sign-in/", sign_in, name="sign-in"),
     path(
         "sign-in/",
-        CustomLogin.as_view(
+        CustomLoginView.as_view(
             # template_name="registration/login.html",
         ),
         name="sign-in",
