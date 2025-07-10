@@ -11,6 +11,7 @@ from users.views import (
     CustomLogin,
     ProfileView,
 )
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path("sign-up/", sign_up, name="sign-up"),
@@ -22,7 +23,8 @@ urlpatterns = [
         ),
         name="sign-in",
     ),
-    path("log-out/", log_out, name="log-out"),
+    # path("log-out/", log_out, name="log-out"),
+    path("log-out/", LogoutView.as_view(), name="log-out"),
     path("activate/<int:user_id>/<str:token>/", activate_user, name="activate"),
     path("admin/dashboard/", admin_dashboard, name="admin-dashboard"),
     path("admin/<int:user_id>/assign-role/", assign_role, name="assign-role"),
