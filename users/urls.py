@@ -9,10 +9,18 @@ from users.views import (
     create_group,
     group_list,
 )
+from django.contrib.auth.views import LoginView
 
 urlpatterns = [
     path("sign-up/", sign_up, name="sign-up"),
-    path("sign-in/", sign_in, name="sign-in"),
+    # path("sign-in/", sign_in, name="sign-in"),
+    path(
+        "sign-in/",
+        LoginView.as_view(
+            # template_name="registration/login.html",
+        ),
+        name="sign-in",
+    ),
     path("log-out/", log_out, name="log-out"),
     path("activate/<int:user_id>/<str:token>/", activate_user, name="activate"),
     path("admin/dashboard/", admin_dashboard, name="admin-dashboard"),
