@@ -11,6 +11,7 @@ from users.views import (
     CustomLoginView,
     ProfileView,
     ChangePassword,
+    CustomPasswordResetView,
 )
 from django.contrib.auth.views import (
     LogoutView,
@@ -43,11 +44,7 @@ urlpatterns = [
     #     ),
     #     name="password-change",
     # ),
-    path(
-        "password-change/",
-        ChangePassword.as_view(),
-        name="password-change",
-    ),
+    path("password-change/", ChangePassword.as_view(), name="password-change"),
     path(
         "password-change/done/",
         PasswordChangeDoneView.as_view(
@@ -55,4 +52,5 @@ urlpatterns = [
         ),
         name="password_change_done",
     ),
+    path("password-reset/", CustomPasswordResetView.as_view(), name="password-reset"),
 ]
