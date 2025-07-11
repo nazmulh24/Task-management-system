@@ -10,6 +10,7 @@ from users.forms import (
     CustomPasswordChangeForm,
     CustomPasswordResetForm,
     CustomConfirmPasswordForm,
+    EditProfileForm,
 )
 from django.contrib import messages
 from django.contrib.auth.tokens import default_token_generator
@@ -21,9 +22,32 @@ from django.contrib.auth.views import (
     PasswordResetView,
     PasswordResetConfirmView,
 )
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, UpdateView
 from django.urls import reverse_lazy
 from django.views import View
+from users.models import UserProfile
+
+
+class UpdateProfile(UpdateView):
+    model = User
+    form_class = EditProfileForm
+    template_name = "accounts/update_profile.html"
+    context_object_name = "form"
+
+    def get_object(self):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_profile = UserProfile.objects.get(user=self.request.user)
+        context["form"] = self.form_class(
+            instance=self.get_object, userprofile=user_profile
+        )
+        return context
+
+    def form_valid(self, form):
+        form.save(commit=True)
+        return redirect("profile")
 
 
 def is_admin(user):

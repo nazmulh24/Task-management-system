@@ -14,6 +14,7 @@ from users.views import (
     CustomPasswordResetView,
     PasswordResetConfirmView,
     SignUp,
+    UpdateProfile,
 )
 from django.contrib.auth.views import (
     LogoutView,
@@ -61,4 +62,5 @@ urlpatterns = [
         PasswordResetConfirmView.as_view(),
         name="password_reset_confirm",
     ),
+    path("edit-profile/", UpdateProfile.as_view(), name="edit-profile"),
 ]
