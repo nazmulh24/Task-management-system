@@ -23,6 +23,7 @@ from django.contrib.auth.views import (
 )
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
+from django.views import View
 
 
 def is_admin(user):
@@ -48,6 +49,31 @@ def sign_up(request):
 
     context = {"form": form}
     return render(request, "registration/register.html", context)
+
+
+class SignUp(View):
+    template_name = "registration/register.html"
+    form_class = CustomRegisterForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {"form": form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data.get("pass1"))
+            user.is_active = False
+            user.save()
+
+            messages.success(
+                request,
+                "Registration successful! Please check your email to activate your account.",
+            )
+            return redirect("sign-in")
+
+        return render(request, self.template_name, {"form": form})
 
 
 def sign_in(request):
