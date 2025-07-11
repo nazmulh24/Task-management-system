@@ -7,6 +7,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from users.models import UserProfiles
 
 
 # @receiver(post_save, sender=User)
@@ -70,3 +71,10 @@ def assign_role(sender, instance, created, **kwargs):
         user_group, created = Group.objects.get_or_create(name="User")
         instance.groups.add(user_group)
         instance.save()
+
+
+@receiver(post_save, sender=User)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfiles.objects.create(user=instance)
+    instance.userprofile.save()
