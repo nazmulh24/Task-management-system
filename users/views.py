@@ -37,11 +37,17 @@ class UpdateProfile(UpdateView):
     def get_object(self):
         return self.request.user
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["userprofile"] = UserProfile.objects.get(user=self.request.user)
+
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_profile = UserProfile.objects.get(user=self.request.user)
         context["form"] = self.form_class(
-            instance=self.get_object, userprofile=user_profile
+            instance=self.get_object(), userprofile=user_profile
         )
         return context
 
@@ -229,6 +235,8 @@ class ProfileView(TemplateView):
         context["username"] = user.username
         context["email"] = user.email
         context["name"] = user.get_full_name()
+        context["bio"] = user.userprofile.bio
+        context["profile_img"] = user.userprofile.profile_img
         context["member_since"] = user.date_joined
         context["last_login"] = user.last_login
 

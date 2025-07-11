@@ -122,11 +122,11 @@ class EditProfileForm(StyleFormMixin, forms.ModelForm):
         model = User
         fields = ["email", "first_name", "last_name"]
 
-    bio = forms.CharField(required=False, widget=forms.Textarea)
-    profile_img = forms.ImageField(required=False)
+    bio = forms.CharField(required=False, widget=forms.Textarea, label="Bio")
+    profile_img = forms.ImageField(required=False, label="Profile Image")
 
     def __init__(self, *args, **kwargs):
-        print(kwargs)
+        self.userprofile = kwargs.pop("userprofile", None)
         super().__init__(*args, **kwargs)
 
         # ToDo: Handle Error
@@ -144,6 +144,8 @@ class EditProfileForm(StyleFormMixin, forms.ModelForm):
 
             if commit:
                 self.userprofile.save()
+
         if commit:
-            self.save()
+            user.save()
+
         return user
