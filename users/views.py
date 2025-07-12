@@ -25,9 +25,9 @@ from django.contrib.auth.views import (
 from django.views.generic import TemplateView, UpdateView
 from django.urls import reverse_lazy
 from django.views import View
-from users.models import UserProfile
 
 
+"""
 class UpdateProfile(UpdateView):
     model = User
     form_class = EditProfileForm
@@ -53,6 +53,21 @@ class UpdateProfile(UpdateView):
 
     def form_valid(self, form):
         form.save(commit=True)
+        return redirect("profile")
+"""
+
+
+class UpdateProfile(UpdateView):
+    model = User
+    form_class = EditProfileForm
+    template_name = "accounts/update_profile.html"
+    context_object_name = "form"
+
+    def get_object(self):
+        return self.request.user
+
+    def form_valid(self, form):
+        form.save()
         return redirect("profile")
 
 

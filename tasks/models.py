@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
 
 
@@ -13,7 +14,6 @@ class Task(models.Model):
         on_delete=models.CASCADE,
         default=1,
     )
-    # assigned_to = models.ManyToManyField("Employee", related_name="tasks")
     assigned_to = models.ManyToManyField(User, related_name="tasks")
     title = models.CharField(max_length=200)
     description = models.TextField()

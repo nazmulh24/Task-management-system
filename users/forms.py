@@ -9,6 +9,7 @@ from django.contrib.auth.forms import (
 )
 from django.contrib.auth.models import User, Group, Permission
 from tasks.forms import StyleFormMixin
+from users.models import CustomUser
 
 
 class RegisterForm(UserCreationForm):
@@ -117,6 +118,7 @@ class CustomConfirmPasswordForm(StyleFormMixin, SetPasswordForm):
     pass
 
 
+"""
 class EditProfileForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = User
@@ -149,3 +151,12 @@ class EditProfileForm(StyleFormMixin, forms.ModelForm):
             user.save()
 
         return user
+"""
+
+
+class EditProfileForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ["email", "first_name", "last_name", "bio", "profile_img"]
+        
+        
