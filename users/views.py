@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import  Group
 from django.contrib.auth import authenticate, login, logout
 from users.forms import (
     CustomRegisterForm,
@@ -25,6 +25,9 @@ from django.contrib.auth.views import (
 from django.views.generic import TemplateView, UpdateView
 from django.urls import reverse_lazy
 from django.views import View
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 """
@@ -250,8 +253,9 @@ class ProfileView(TemplateView):
         context["username"] = user.username
         context["email"] = user.email
         context["name"] = user.get_full_name()
-        context["bio"] = user.userprofile.bio
-        context["profile_img"] = user.userprofile.profile_img
+        context["bio"] = user.bio
+        context["profile_img"] = user.profile_img
+        
         context["member_since"] = user.date_joined
         context["last_login"] = user.last_login
 

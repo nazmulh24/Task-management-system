@@ -19,7 +19,9 @@ class UserProfile(models.Model):
 
 
 class CustomUser(AbstractUser):
-    profile_img = models.ImageField(upload_to="profile_images", blank=True)
+    profile_img = models.ImageField(
+        upload_to="profile_images", blank=True, default="profile_images/default_pi.png"
+    )
     bio = models.TextField(blank=True)
 
     def __str__(self):

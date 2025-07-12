@@ -7,9 +7,12 @@ from django.contrib.auth.forms import (
     PasswordResetForm,
     SetPasswordForm,
 )
-from django.contrib.auth.models import User, Group, Permission
+from django.contrib.auth.models import Group, Permission
 from tasks.forms import StyleFormMixin
 from users.models import CustomUser
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class RegisterForm(UserCreationForm):
@@ -158,5 +161,3 @@ class EditProfileForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ["email", "first_name", "last_name", "bio", "profile_img"]
-        
-        
