@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
-from tasks.forms import TaskForm, TaskModelForm, TaskDetailModelForm
-from tasks.models import Task, TaskDetail, Project
-from datetime import date
-from django.db.models import Q, Count, Max, Min, Sum, Avg
+from tasks.forms import TaskModelForm, TaskDetailModelForm
+from tasks.models import Task, Project
+from django.db.models import Q, Count
 from django.contrib import messages
 from django.contrib.auth.decorators import (
     login_required,
@@ -25,46 +23,59 @@ def is_employee(user):
     return user.is_authenticated and user.groups.filter(name="Employee").exists()
 
 
-@user_passes_test(is_manager, login_url="no-permission")
-def manager_dashboard(request):
-
-    type = request.GET.get("type", "all")
-    # print(type)
-
-    counts = Task.objects.aggregate(
-        total_task=Count("id"),
-        completed_task=Count("id", Q(status="COMPLETED")),
-        in_progress_task=Count("id", Q(status="IN_PROGRESS")),
-        pending_task=Count("id", Q(status="PENDING")),
-    )
-
-    base_query = Task.objects.select_related("details").prefetch_related("assigned_to")
-
-    if type == "completed":
-        tasks = base_query.filter(status="COMPLETED")
-    elif type == "in_progress":
-        tasks = base_query.filter(status="IN_PROGRESS")
-    elif type == "pending":
-        tasks = base_query.filter(status="PENDING")
-    elif type == "all":
-        tasks = base_query.all()
-
-    context = {
-        "tasks": tasks,
-        "counts": counts,
-    }
-    return render(request, "Dashboard/manager-dashboard.html", context)
+manager_dashboard_decorators = [
+    login_required,
+    user_passes_test(is_manager, login_url="no-permission"),
+]
 
 
-@user_passes_test(is_employee, login_url="no-permission")
-def employee_dashboard(request):
-    return render(request, "Dashboard/user-dashboard.html")
+@method_decorator(manager_dashboard_decorators, name="dispatch")
+class ManagerDashboard(View):
+    def get(self, request, *args, **kwargs):
+        filter_type = request.GET.get("type", "all")
+
+        counts = Task.objects.aggregate(
+            total_task=Count("id"),
+            completed_task=Count("id", Q(status="COMPLETED")),
+            in_progress_task=Count("id", Q(status="IN_PROGRESS")),
+            pending_task=Count("id", Q(status="PENDING")),
+        )
+
+        base_query = Task.objects.select_related("details").prefetch_related(
+            "assigned_to"
+        )
+
+        if filter_type == "completed":
+            tasks = base_query.filter(status="COMPLETED")
+        elif filter_type == "in_progress":
+            tasks = base_query.filter(status="IN_PROGRESS")
+        elif filter_type == "pending":
+            tasks = base_query.filter(status="PENDING")
+        else:
+            tasks = base_query.all()
+
+        context = {
+            "tasks": tasks,
+            "counts": counts,
+        }
+        return render(request, "Dashboard/manager-dashboard.html", context)
+
+
+employee_dashboard_decorators = [
+    login_required,
+    user_passes_test(is_employee, login_url="no-permission"),
+]
+
+
+@method_decorator(employee_dashboard_decorators, name="dispatch")
+class EmployeeDashboard(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "Dashboard/user-dashboard.html")
 
 
 class CreateTask(ContextMixin, LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = "tasks.add_task"
     login_url = "sign-in"
-
     template_name = "task_form.html"
 
     def get_context_data(self, **kwargs):
@@ -84,56 +95,25 @@ class CreateTask(ContextMixin, LoginRequiredMixin, PermissionRequiredMixin, View
         task_detail_form = TaskDetailModelForm(request.POST, request.FILES)
 
         if task_form.is_valid() and task_detail_form.is_valid():
-            task = task_form.save()
-            task_detail = task_detail_form.save(commit=False)
-            task_detail.task = task
-            task_detail.save()
+            try:
+                task = task_form.save()
+                task_detail = task_detail_form.save(commit=False)
+                task_detail.task = task
+                task_detail.save()
 
-            messages.success(request, "Task added successfully!!")
-            context = self.get_context_data(
-                task_form=task_form, task_detail_form=task_detail_form
-            )
-            return render(request, self.template_name, context)
+                messages.success(request, "Task added successfully!")
+                return redirect(
+                    "mgr-dashboard"
+                )  # ✅ Use a redirect after successful post
 
+            except Exception as e:
+                messages.error(request, f"Error creating task: {e}")
 
-update_decorators = [
-    login_required,
-    permission_required("tasks.change_task", login_url="no-permission"),
-]
-
-
-@method_decorator(update_decorators, name="dispatch")
-class UpdateTask(View):
-    template_name = "task_form.html"
-
-    def get(self, request, *args, **kwargs):
-        task_id = kwargs.get("id")
-        task = get_object_or_404(Task, id=task_id)
-
-        task_form = TaskModelForm(instance=task)
-        task_detail_form = TaskDetailModelForm()
-
-        context = {"task_form": task_form, "task_detail_form": task_detail_form}
-        return render(request, self.template_name, context)
-
-    def post(self, request, *args, **kwargs):
-        task_id = kwargs.get("id")
-        task = get_object_or_404(Task, id=task_id)
-        task_details = getattr(task, "details", None)
-
-        task_form = TaskModelForm(request.POST, instance=task)
-        task_detail_form = TaskDetailModelForm(
-            request.POST, request.FILES, instance=task_details
+        # If forms are invalid or exception occurs
+        context = self.get_context_data(
+            task_form=task_form, task_detail_form=task_detail_form
         )
-
-        if task_form.is_valid() and task_detail_form.is_valid():
-            task = task_form.save()
-            task_detail = task_detail_form.save(commit=False)
-            task_detail.task = task
-            task_detail.save()
-
-            messages.success(request, "Task updated successfully!")
-            return redirect("update-task", id=task.id)
+        return render(request, self.template_name, context)
 
 
 class UpdateTask_Generic(UpdateView):
@@ -173,31 +153,29 @@ class UpdateTask_Generic(UpdateView):
 
             messages.success(request, "Task updated successfully!")
             return redirect("update-task", self.object.id)
-        
+
         return redirect("update-task", self.object.id)
 
 
-@login_required
-@permission_required("tasks.delete_task", login_url="no-permission")
-def delete_task(request, id):
-    if request.method == "POST":
-        task = Task.objects.get(id=id)
+delete_task_decorator = [
+    login_required,
+    permission_required("tasks.delete_task", login_url="no-permission"),
+]
+
+
+@method_decorator(delete_task_decorator, name="dispatch")
+class DeleteTask(View):
+    def post(self, request, id, *args, **kwargs):
+        task = get_object_or_404(Task, id=id)
         task.delete()
         messages.success(request, "Task deleted successfully!!")
         return redirect("mgr-dashboard")
-    else:
+
+    def get(self, request, id, *args, **kwargs):
         messages.error(
             request, "Invalid request method. Please use POST to delete a task."
         )
         return redirect("mgr-dashboard")
-
-
-@login_required
-@permission_required("tasks.view_task", login_url="no-permission")
-def view_task(request):
-    task_cnt = Project.objects.annotate(num_task=Count("task")).order_by("num_task")
-
-    return render(request, "show_task.html", {"task_cnt": task_cnt})
 
 
 view_project_decorator = [
@@ -241,25 +219,3 @@ class TaskDetails(DetailView):
         task.status = select_status
         task.save()
         return redirect("task-details", task.id)
-
-
-@login_required
-@permission_required("tasks.view_task", login_url="no-permission")
-def task_details(request, task_id):
-    task = Task.objects.get(id=task_id)
-    status_choise = Task.STATUS_OPTIONS
-    if request.method == "POST":
-        select_status = request.POST.get("task_status")
-        task.status = select_status
-        task.save()
-
-        return redirect("task-details", task.id)
-
-    return render(
-        request,
-        "task_details.html",
-        {
-            "task": task,
-            "status_choise": status_choise,
-        },
-    )
