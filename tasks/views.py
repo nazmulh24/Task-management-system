@@ -61,34 +61,6 @@ def employee_dashboard(request):
     return render(request, "Dashboard/user-dashboard.html")
 
 
-# @login_required
-# @permission_required("tasks.add_task", login_url="no-permission")
-# def create_task(request):
-#     task_form = TaskModelForm()  # for GET
-#     task_detail_form = TaskDetailModelForm()
-
-#     if request.method == "POST":
-#         task_form = TaskModelForm(request.POST)
-#         task_detail_form = TaskDetailModelForm(request.POST, request.FILES)
-
-#         if task_form.is_valid() and task_detail_form.is_valid():
-
-#             """For Model Form Data"""
-#             task = task_form.save()
-#             task_detail = task_detail_form.save(commit=False)
-#             task_detail.task = task
-#             task_detail.save()
-
-#             messages.success(request, "Task added successfully!!")
-#             return redirect("create-task")
-
-#     context = {
-#         "task_form": task_form,
-#         "task_detail_form": task_detail_form,
-#     }
-#     return render(request, "task_form.html", context)
-
-
 class CreateTask(ContextMixin, LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = "tasks.add_task"
     login_url = "sign-in"
@@ -122,39 +94,6 @@ class CreateTask(ContextMixin, LoginRequiredMixin, PermissionRequiredMixin, View
                 task_form=task_form, task_detail_form=task_detail_form
             )
             return render(request, self.template_name, context)
-
-
-# @login_required
-# @permission_required("tasks.change_task", login_url="no-permission")
-# def update_task(request, id):
-#     task = Task.objects.get(id=id)
-
-#     task_form = TaskModelForm(instance=task)  # for GET
-#     task_detail_form = TaskDetailModelForm()
-
-#     if task.details:
-#         task_detail_form = TaskDetailModelForm(instance=task.details)
-
-#     if request.method == "POST":
-#         task_form = TaskModelForm(request.POST, instance=task)
-#         task_detail_form = TaskDetailModelForm(request.POST, instance=task.details)
-
-#         if task_form.is_valid() and task_detail_form.is_valid():
-
-#             """For Model Form Data"""
-#             task = task_form.save()
-#             task_detail = task_detail_form.save(commit=False)
-#             task_detail.task = task
-#             task_detail_form.save()
-
-#             messages.success(request, "Task Updated successfully!!")
-#             return redirect("update-task", id)
-
-#     context = {
-#         "task_form": task_form,
-#         "task_detail_form": task_detail_form,
-#     }
-#     return render(request, "task_form.html", context)
 
 
 update_decorators = [

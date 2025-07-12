@@ -91,9 +91,7 @@ class LoginForm(StyleFormMixin, AuthenticationForm):
 
 
 class AssignRoleForm(StyleFormMixin, forms.Form):
-    role = forms.ModelChoiceField(
-        queryset=Group.objects.all(), empty_label="Select Role"
-    )
+    role = forms.ModelChoiceField(queryset=Group.objects.all(), label="Select Role")
 
 
 class CreateGroupForm(StyleFormMixin, forms.ModelForm):
